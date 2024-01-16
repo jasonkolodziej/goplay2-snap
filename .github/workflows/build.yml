@@ -41,3 +41,4 @@ jobs:
           ls -al
           echo Add other actions to build,
           echo test, and deploy your project.
+          snapcraft

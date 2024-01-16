@@ -79,5 +79,5 @@ jobs:
             tag_name: v0.1
             prerelease: true
           # token: ${{ secrets.GITRELEASE_TOKEN }}
-            files: ${{ steps.results.outputs.snap }}
+            files: ${{ steps.results.outputs }}
             

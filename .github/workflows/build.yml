@@ -69,11 +69,15 @@ jobs:
           id: results
           with:
             name: snap
+      # Runs a set of commands using the runners shell
+        - name: Run a multi-line script
+          run: |
+            ls -al
         - name: GH Release
           uses: softprops/action-gh-release@v0.1.15
           with:
             tag_name: v0.1
             prerelease: true
           # token: ${{ secrets.GITRELEASE_TOKEN }}
-            file: ${{ steps.results.outputs.snap }}
+            files: ${{ steps.results.outputs.snap }}
             

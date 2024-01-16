@@ -63,11 +63,15 @@ parts:
     ## need to be installed in the build environment.
     ## These are the tools and libraries that are used during the build process.
     build-packages:
+      - pkg-config
       - pulseaudio
       - libfdk-aac-dev
     stage-packages:
       - pulseaudio
       - libfdk-aac-dev
+    build-environment:
+      - CGO_ENABLED: 1
+      - CGO_LDFLAGS_ALLOW: ".*"
     ## These are packages containing libraries are resources that the final snap needs to run.
     ## They are very similar to those that would be listed as run-time
     ## dependencies on a standard distribution package.

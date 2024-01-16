@@ -42,6 +42,7 @@ jobs:
       - uses: docker/setup-qemu-action@v1
       # https://github.com/marketplace/actions/snapcraft-multiarch-build#action-inputs
       - uses: diddlesnaps/snapcraft-multiarch-action@v1
+        id: builder
         with:
           architecture: ${{ matrix.platform }}
 
@@ -52,3 +53,10 @@ jobs:
       #     echo Add other actions to build,
       #     echo test, and deploy your project.
       #     snapcraft
+      - name: GH Release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          prerelease: true
+          # token: ${{ secrets.GITRELEASE_TOKEN }}
+          file: goplay2_0.1_arm64.snap
+            

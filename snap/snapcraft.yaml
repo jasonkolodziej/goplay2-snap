@@ -101,7 +101,7 @@ apps:
       # - GOPLAY_DELAY=0
       # (interface) used to listen (DEFAULT: 'eth0')
       # - GOPLAY_INTERFACE="wlan0"
-      # (name) used as accessory name (Bonjour)
+      # (name) used as accessory name (Bonjour), for a snap this will create a folder at the root of the snap
       # - GOPLAY_NAME="TestPlay"
       # (pulse audio sink name) to replace default sink
       # - GOPLAY_SINK

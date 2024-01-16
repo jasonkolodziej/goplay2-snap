@@ -23,12 +23,7 @@ jobs:
     strategy:
       matrix:
         platform:
-        - i386
-        - amd64
-        - armhf
         - arm64
-        - ppc64el
-        - s390x
     env:
       # https://github.com/marketplace/actions/snapcraft-action#log-in
       SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}

@@ -19,6 +19,16 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    # Reference: https://github.com/marketplace/actions/snapcraft-multiarch-build
+    strategy:
+      matrix:
+        platform:
+        - i386
+        - amd64
+        - armhf
+        - arm64
+        - ppc64el
+        - s390x
     env:
       # https://github.com/marketplace/actions/snapcraft-action#log-in
       SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
@@ -27,14 +37,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v3
-      # Use Samuel's action to get snapcraft
-      - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v2
-        # inform snap/snapcraft that you want to build using lxd (18.04) is
-        # NOT set like this
+      # # Use Samuel's action to get snapcraft
+      # - name: Install Snapcraft
+      #   uses: samuelmeuli/action-snapcraft@v2
+      #   # inform snap/snapcraft that you want to build using lxd (18.04) is
+      #   # NOT set like this
+      #   with:
+      #     use_lxd: ${{ matrix.os == 'ubuntu-18.04' }}
+      - uses: docker/setup-qemu-action@v1
+      # https://github.com/marketplace/actions/snapcraft-multiarch-build#action-inputs
+      - uses: diddlesnaps/snapcraft-multiarch-action@v1
         with:
-          use_lxd: ${{ matrix.os == 'ubuntu-18.04' }}
-          architecture: arm64
+          architecture: ${{ matrix.platform }}
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script

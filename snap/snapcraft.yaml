@@ -114,3 +114,5 @@ apps:
       ## Network Access
       - ptp
       - network-bind
+      - network
+      - network-control

@@ -141,5 +141,5 @@ apps:
       - network-bind
       - network
       - network-control
-      - avahi-control
-      - avahi-observe
+      # - avahi-control
+      # - avahi-observe

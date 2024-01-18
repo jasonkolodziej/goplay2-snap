@@ -1,0 +1,48 @@
+# AIRPLAY from phone without Homekit setup
+root@ubuntu:/home/<USR># goplay2 -i wlan0
+2024/01/18 21:30:24 Starting goplay for device Pi: <UUID>, guid: <UUID>, Psi: <UUID>
+2024/01/18 21:30:49 request received : GET /info body 70
+2024/01/18 21:30:49 response sent : body 374
+2024/01/18 21:30:49 request received : POST /pair-verify body 37
+2024/01/18 21:30:49 response sent : body 140
+2024/01/18 21:30:49 request received : POST /pair-setup body 6
+2024/01/18 21:30:49 response sent : body 409
+2024/01/18 21:30:49 request received : POST /pair-setup body 457
+2024/01/18 21:30:49 response sent : body 69
+2024/01/18 21:30:49 request received : POST /pair-setup body 159
+2024/01/18 21:30:49 response sent : body 143
+2024/01/18 21:30:49 request received : POST /pair-verify body 37
+2024/01/18 21:30:49 server.go:82: Error:Error handling RSTP request Invalid internal pairing verify step Waiting
+
+2024/01/18 21:31:14 request received : GET /info body 70
+2024/01/18 21:31:14 response sent : body 374
+2024/01/18 21:31:14 request received : POST /pair-setup body 6
+2024/01/18 21:31:14 response sent : body 409
+2024/01/18 21:31:14 request received : POST /pair-setup body 457
+2024/01/18 21:31:14 response sent : body 69
+2024/01/18 21:31:14 request received : POST /pair-setup body 159
+2024/01/18 21:31:14 response sent : body 143
+2024/01/18 21:31:14 request received : POST /pair-verify body 37
+2024/01/18 21:31:14 response sent : body 140
+2024/01/18 21:31:14 request received : POST /pair-verify body 125
+2024/01/18 21:31:14 response sent : body 3
+2024/01/18 21:31:14 request received : POST /fp-setup body 16
+2024/01/18 21:31:14 response sent : body 142
+2024/01/18 21:31:14 request received : POST /fp-setup body 164
+2024/01/18 21:31:14 response sent : body 32
+2024/01/18 21:31:14 request received : SETUP rtsp://192.168.2.248/3334269338243255103 body 428
+2024/01/18 21:31:14 response sent : body 76
+2024/01/18 21:31:14 request received : GET /info body 0
+2024/01/18 21:31:14 response sent : body 374
+2024/01/18 21:31:14 request received : RECORD rtsp://192.168.2.248/3334269338243255103 body 0
+2024/01/18 21:31:14 response sent : body 0
+2024/01/18 21:31:14 request received : POST /pair-remove body 44
+2024/01/18 21:31:14 response sent : body 3
+2024/01/18 21:31:14 request received : POST /pair-list body 6
+2024/01/18 21:31:14 response sent : body 3
+2024/01/18 21:31:14 request received : POST /configure body 119
+2024/01/18 21:31:14 response sent : body 229
+2024/01/18 21:31:14 request received : TEARDOWN rtsp://192.168.2.248/3334269338243255103 body 42
+2024/01/18 21:31:14 response sent : body 0
+2024/01/18 21:31:14 server.go:76: Error:Error parsing RSTP request EOF
+2024/01/18 21:31:14 server.go:37: Error:Event error : EOF

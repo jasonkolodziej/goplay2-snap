@@ -49,6 +49,13 @@ grade: devel # must be 'stable' to release into candidate/stable channels
 ## Parts can be anything: programs, libraries, or other needed assets.
 parts:
   ## The parts arbitrary name
+  ## ref: https://github.com/ogra1/pulse-server/blob/45a46c7abbf84f6a701c12d51a51137cf2074a9a/snap/snapcraft.yaml#L88
+  goplay2-common:
+    plugin: dump
+    source: bin
+    organize:
+      client-wrapper: bin/client-wrapper
+      
   goplay2:
   ## The plugin field=(dump) determines how the information in specified in the source field
   ## and includes the source's contents in the snap.
@@ -64,10 +71,14 @@ parts:
     ## These are the tools and libraries that are used during the build process.
     build-packages:
       - pkg-config
+      ## ref: https://github.com/canonical-system-enablement/pulseaudio-example/blob/c3db5d94830a1723c1a7ed22e1345c932d696cc2/snapcraft.yaml#L27
+      - libpulse-dev
       - pulseaudio
       - libfdk-aac-dev
     stage-packages:
-      - pulseaudio
+      ## ref: https://github.com/canonical-system-enablement/pulseaudio-example/blob/c3db5d94830a1723c1a7ed22e1345c932d696cc2/snapcraft.yaml#L27
+      - libpulse-dev
+      # - pulseaudio
       - libfdk-aac-dev
     build-environment:
       - CGO_ENABLED: 1
@@ -91,9 +102,11 @@ apps:
   #   daemon: simple
   goplay2:
     # adapter: full
+    ## ref: https://github.com/ogra1/pulse-server/blob/45a46c7abbf84f6a701c12d51a51137cf2074a9a/snap/snapcraft.yaml#L43
+    command-chain: [bin/client-wrapper]
     # WORKAROUND: Snapcraft impose too much restrictions to the command format
     # https://bugs.launchpad.net/snapcraft/+bug/1820055
-    command: /bin/goplay2
+    command: usr/bin/goplay2
     # daemon: simple
     environment:
       # (ms) is subtracted from the local "clock"
@@ -106,10 +119,17 @@ apps:
       # (pulse audio sink name) to replace default sink
       # - GOPLAY_SINK
       # Fix ALSA
-      GOPLAY2_CONFIG_PATH: /$SNAP_USER_DATA/.config
+      ## ref: https://github.com/ogra1/pulse-server/blob/45a46c7abbf84f6a701c12d51a51137cf2074a9a/snap/snapcraft.yaml#L59
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/pulseaudio:$LD_LIBRARY_PATH"
+      PULSE_CLIENTCONFIG: $SNAP/etc/pulse/client.conf
+      # ss -lxe -A unix_stream //> /run/pulse/native (owned by sys)
+      PULSE_RUNTIME_PATH: /var/run/pulse
+      PULSE_SYSTEM: 1
+      GOPLAY2_CONFIG_PATH: $SNAP_USER_DATA/.config
     plugs:
       ## Audio access
       - audio-playback
+      ## ref: https://github.com/canonical-system-enablement/pulseaudio-example/blob/c3db5d94830a1723c1a7ed22e1345c932d696cc2/snapcraft.yaml#L13
       - pulseaudio
       ## Network Access
       - ptp

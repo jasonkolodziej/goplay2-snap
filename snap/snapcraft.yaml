@@ -1,12 +1,12 @@
-# GLOBAL METADATA
-## Reference: https://snapcraft.io/docs/snapcraft-yaml-reference
-## The name must be unique in the Snap Store.
-## Valid snap names consist of lower-case alphanumeric characters and hyphens.
-## They cannot be all numbers and they also cannot start or end with a hyphen.
+#* GLOBAL METADATA
+# Reference: https://snapcraft.io/docs/snapcraft-yaml-reference
+# The name must be unique in the Snap Store.
+# Valid snap names consist of lower-case alphanumeric characters and hyphens.
+# They cannot be all numbers and they also cannot start or end with a hyphen.
 name: goplay2 # you probably want to 'snapcraft register <name>'
-## The <base> keyword defines a special kind of snap that provides a run-time environment
-## with a minimal set of libraries that are common to most applications.
-## They’re transparent to users, but they need to be considered, and specified, when building a snap.
+# The <base> keyword defines a special kind of snap that provides a run-time environment
+# with a minimal set of libraries that are common to most applications.
+# They’re transparent to users, but they need to be considered, and specified, when building a snap.
 base: core22 # the base snap is the execution environment for this snap
 version: '0.1' # just for humans, typically '1.2+git' or '1.3.2'
 summary: Send audio to device running this snap using AirPlay 2 # 79 char long summary
@@ -21,35 +21,35 @@ description: |
 # icon: <icon path?>
 license: MIT
 
-# ARCHITECTURES
-## builds a snap to run on the same architecture as the build environment.
-## ref: https://snapcraft.io/docs/architectures
+#* ARCHITECTURES
+# builds a snap to run on the same architecture as the build environment.
+# ref: https://snapcraft.io/docs/architectures
 architectures:
   #- build-on: arm64
 #    build-for:
   - build-on: arm64
     build-for: arm64
 
-# SECURITY MODEL
-## Because devmode is only intended for development,
-## snaps must be set to strict confinement before they can be published as “stable” in the Snap Store.
-## Once an app is working well in devmode, you can review confinement violations,
-## add appropriate interfaces, and switch to strict confinement.
+#* SECURITY MODEL
+# Because devmode is only intended for development,
+# snaps must be set to strict confinement before they can be published as “stable” in the Snap Store.
+# Once an app is working well in devmode, you can review confinement violations,
+# add appropriate interfaces, and switch to strict confinement.
 confinement: devmode # use 'strict' once you have the right plugs and slots
-## Defines the quality grade of the snap.
-## Can be either devel (i.e. a development version of the snap,
-## so not to be published to the stable or candidate channels) or
-## stable (i.e. a stable release or release candidate, which can be released to all channels).
-## A snap of type app (default) cannot be set to stable if the base is not on a stable channel.
+# Defines the quality grade of the snap.
+# Can be either devel (i.e. a development version of the snap,
+# so not to be published to the stable or candidate channels) or
+# stable (i.e. a stable release or release candidate, which can be released to all channels).
+# A snap of type app (default) cannot be set to stable if the base is not on a stable channel.
 grade: devel # must be 'stable' to release into candidate/stable channels
 
-# PARTS
-## are the raw building blocks of a snap, used to collect and build binaries and their dependencies.
-## Parts define what sources are needed to assemble your app.
-## Parts can be anything: programs, libraries, or other needed assets.
+#* PARTS
+# are the raw building blocks of a snap, used to collect and build binaries and their dependencies.
+# Parts define what sources are needed to assemble your app.
+# Parts can be anything: programs, libraries, or other needed assets.
 parts:
-  ## The parts arbitrary name
-  ## ref: https://github.com/ogra1/pulse-server/blob/45a46c7abbf84f6a701c12d51a51137cf2074a9a/snap/snapcraft.yaml#L88
+  # The parts arbitrary name
+  # ref: https://github.com/ogra1/pulse-server/blob/45a46c7abbf84f6a701c12d51a51137cf2074a9a/snap/snapcraft.yaml#L88
   goplay2-common:
     plugin: dump
     source: bin
@@ -57,52 +57,54 @@ parts:
       client-wrapper: bin/client-wrapper
       
   goplay2:
-  ## The plugin field=(dump) determines how the information in specified in the source field
-  ## and includes the source's contents in the snap.
-  ## The source can be a local or remote zip file, deb file, or tarball.
+    # The plugin field=(dump) determines how the information in specified in the source field
+    # and includes the source's contents in the snap.
+    # The source can be a local or remote zip file, deb file, or tarball.
     plugin: go
-    ## (list of strings) Features used to build optional dependencies
+    # (list of strings) Features used to build optional dependencies
     build-snaps:
       - go
     source-type: git
     source: https://github.com/openairplay/goplay2.git
-    ## Before building the part, the packages listed in the build-packages section
-    ## need to be installed in the build environment.
-    ## These are the tools and libraries that are used during the build process.
+    # Before building the part, the packages listed in the build-packages section
+    # need to be installed in the build environment.
+    # These are the tools and libraries that are used during the build process.
     build-packages:
       - pkg-config
-      ## ref: https://github.com/canonical-system-enablement/pulseaudio-example/blob/c3db5d94830a1723c1a7ed22e1345c932d696cc2/snapcraft.yaml#L27
+      # ref: https://github.com/canonical-system-enablement/pulseaudio-example/blob/c3db5d94830a1723c1a7ed22e1345c932d696cc2/snapcraft.yaml#L27
       - libpulse-dev
       - pulseaudio
       - libfdk-aac-dev
     stage-packages:
-      ## ref: https://github.com/canonical-system-enablement/pulseaudio-example/blob/c3db5d94830a1723c1a7ed22e1345c932d696cc2/snapcraft.yaml#L27
+      # ref: https://github.com/canonical-system-enablement/pulseaudio-example/blob/c3db5d94830a1723c1a7ed22e1345c932d696cc2/snapcraft.yaml#L27
       - libpulse-dev
       # - pulseaudio
       - libfdk-aac-dev
     build-environment:
       - CGO_ENABLED: 1
       - CGO_LDFLAGS_ALLOW: ".*"
-    ## These are packages containing libraries are resources that the final snap needs to run.
-    ## They are very similar to those that would be listed as run-time
-    ## dependencies on a standard distribution package.
+      # Modify where go install installs the binary of the program
+      - GOBIN: "/root/parts/$CRAFT_PART_NAME/install/usr/bin"
+    # These are packages containing libraries are resources that the final snap needs to run.
+    # They are very similar to those that would be listed as run-time
+    # dependencies on a standard distribution package.
     #stage-packages:
-    ## You can override and customise steps of a part’s lifecycle (pull, build, stage, and prime) using overrides;
-    ## ref: https://snapcraft.io/docs/overrides
+    # You can override and customise steps of a part’s lifecycle (pull, build, stage, and prime) using overrides;
+    # ref: https://snapcraft.io/docs/overrides
     # override-<step name>: |
     #   <multi-line>
     #   <shell script>
 
-# APPS
-## ref: https://snapcraft.io/docs/snapcraft-app-and-service-metadata
+#* APPS
+# ref: https://snapcraft.io/docs/snapcraft-app-and-service-metadata
 apps:
-  ## ref: https://snapcraft.io/docs/services-and-daemons
+  # ref: https://snapcraft.io/docs/services-and-daemons
   # some-daemon:
   #   command: bin/os-release.sh
   #   daemon: simple
   goplay2:
     # adapter: full
-    ## ref: https://github.com/ogra1/pulse-server/blob/45a46c7abbf84f6a701c12d51a51137cf2074a9a/snap/snapcraft.yaml#L43
+    # ref: https://github.com/ogra1/pulse-server/blob/45a46c7abbf84f6a701c12d51a51137cf2074a9a/snap/snapcraft.yaml#L43
     command-chain: [bin/client-wrapper]
     # WORKAROUND: Snapcraft impose too much restrictions to the command format
     # https://bugs.launchpad.net/snapcraft/+bug/1820055
@@ -119,7 +121,7 @@ apps:
       # (pulse audio sink name) to replace default sink
       # - GOPLAY_SINK
       # Fix ALSA
-      ## ref: https://github.com/ogra1/pulse-server/blob/45a46c7abbf84f6a701c12d51a51137cf2074a9a/snap/snapcraft.yaml#L59
+      # ref: https://github.com/ogra1/pulse-server/blob/45a46c7abbf84f6a701c12d51a51137cf2074a9a/snap/snapcraft.yaml#L59
       LD_LIBRARY_PATH: "$SNAP/usr/lib/pulseaudio:$LD_LIBRARY_PATH"
       PULSE_CLIENTCONFIG: $SNAP/etc/pulse/client.conf
       # ss -lxe -A unix_stream //> /run/pulse/native (owned by sys)
@@ -127,11 +129,11 @@ apps:
       PULSE_SYSTEM: 1
       GOPLAY2_CONFIG_PATH: $SNAP_USER_DATA/.config
     plugs:
-      ## Audio access
+      # Audio access
       - audio-playback
-      ## ref: https://github.com/canonical-system-enablement/pulseaudio-example/blob/c3db5d94830a1723c1a7ed22e1345c932d696cc2/snapcraft.yaml#L13
+      # ref: https://github.com/canonical-system-enablement/pulseaudio-example/blob/c3db5d94830a1723c1a7ed22e1345c932d696cc2/snapcraft.yaml#L13
       - pulseaudio
-      ## Network Access
+      # Network Access
       - ptp
       - network-bind
       - network

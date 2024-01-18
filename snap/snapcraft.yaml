@@ -73,7 +73,7 @@ parts:
       - pkg-config
       # ref: https://github.com/canonical-system-enablement/pulseaudio-example/blob/c3db5d94830a1723c1a7ed22e1345c932d696cc2/snapcraft.yaml#L27
       - libpulse-dev
-      - pulseaudio
+      # - pulseaudio
       - libfdk-aac-dev
     stage-packages:
       # ref: https://github.com/canonical-system-enablement/pulseaudio-example/blob/c3db5d94830a1723c1a7ed22e1345c932d696cc2/snapcraft.yaml#L27

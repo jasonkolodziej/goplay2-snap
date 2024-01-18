@@ -127,7 +127,7 @@ apps:
       # ss -lxe -A unix_stream //> /run/pulse/native (owned by sys)
       PULSE_RUNTIME_PATH: /var/run/pulse
       XDG_RUNTIME_DIR: /var/run/x
-      PULSE_SERVER: /var/run
+      PULSE_SERVER: /var/run/pulse/native
       PULSE_SYSTEM: 1
       GOPLAY2_CONFIG_PATH: $SNAP_USER_DATA/.config
     plugs:
